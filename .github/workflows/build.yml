@@ -26,16 +26,28 @@ jobs:
           libssl-dev automake autoconf libsqlite3-dev zlib1g-dev libjpeg-dev
         pip install --user buildozer cython
 
+    - name: Install Android SDK & NDK manually
+      run: |
+        mkdir -p $HOME/android-sdk
+        cd $HOME/android-sdk
+        wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O cmdline-tools.zip
+        unzip cmdline-tools.zip
+        mkdir -p cmdline-tools/latest
+        mv cmdline-tools/* cmdline-tools/latest/
+        yes | cmdline-tools/latest/bin/sdkmanager --sdk_root=${HOME}/android-sdk \
+          "platform-tools" "platforms;android-33" "build-tools;30.0.3" "ndk;23.1.7779620"
+        yes | cmdline-tools/latest/bin/sdkmanager --licenses
+
     - name: Build the APK
+      env:
+        ANDROIDSDK: $HOME/android-sdk
+        ANDROIDNDK: $HOME/android-sdk/ndk/23.1.7779620
       run: |
         export PATH=$PATH:~/.local/bin
-        buildozer android update
-        yes | sdkmanager --licenses
-        yes | sdkmanager "platform-tools" "platforms;android-33" "build-tools;30.0.3" "ndk;23.1.7779620"
         buildozer android debug
 
     - name: Upload APK
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v3
       with:
         name: okey101-apk
         path: bin/*.apk
