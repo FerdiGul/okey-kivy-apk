@@ -29,7 +29,6 @@ jobs:
     - name: Build the APK
       run: |
         export PATH=$PATH:~/.local/bin
-        buildozer android clean
         yes | ~/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager \
           "platform-tools" "build-tools;30.0.3" "platforms;android-33" "ndk;23.1.7779620"
         buildozer android debug
