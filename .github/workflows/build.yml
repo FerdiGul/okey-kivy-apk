@@ -29,6 +29,9 @@ jobs:
     - name: Build the APK
       run: |
         export PATH=$PATH:~/.local/bin
+        buildozer android update
+        yes | sdkmanager --licenses
+        yes | sdkmanager "platform-tools" "platforms;android-33" "build-tools;30.0.3" "ndk;23.1.7779620"
         buildozer android debug
 
     - name: Upload APK
