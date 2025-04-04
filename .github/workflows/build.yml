@@ -24,7 +24,7 @@ jobs:
           python3-wheel python3-jinja2 python3-openssl python3-pillow python3-pygments \
           python3-docutils python3-dev build-essential libffi-dev ccache libtool \
           libssl-dev automake autoconf libsqlite3-dev zlib1g-dev libjpeg-dev
-        pip install --user buildozer
+        pip install --user buildozer cython
 
     - name: Build the APK
       run: |
