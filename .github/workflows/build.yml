@@ -33,7 +33,7 @@ jobs:
         buildozer android debug
 
     - name: Upload APK
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@main
       with:
         name: okey101-apk
         path: bin/*.apk
